@@ -66,7 +66,7 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-6 md:p-12 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-6 md:p-12 mt-24 md:mt-32 relative overflow-hidden">
       {/* Floating Orbs */}
       <motion.div
         className="absolute top-20 left-10 w-72 h-72 bg-yellow-500/20 rounded-full blur-3xl"

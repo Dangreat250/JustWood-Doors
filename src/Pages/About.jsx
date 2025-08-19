@@ -45,7 +45,7 @@ const articles = [
 
 const About = () => {
   return (
-    <div className="p-10 text-white bg-gradient-to-br from-gray-800 to-black min-h-screen">
+    <div className="p-10 text-white bg-gradient-to-br from-gray-800 to-black min-h-screen mt-20">
       {/* Header Section */}
       <motion.div
         className="text-center"
