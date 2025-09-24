@@ -27,53 +27,53 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
   };
 
   const dropdownVariants = {
-    hidden: { opacity: 0, y: -10, transition: { duration: 0.2 } },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.2 } },
-    exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
+    hidden: { opacity: 0, y: -8 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
+    exit: { opacity: 0, y: -8, transition: { duration: 0.2 } },
   };
 
   const mobileMenuVariants = {
-    hidden: { opacity: 0, height: 0, transition: { duration: 0.3 } },
+    hidden: { opacity: 0, height: 0 },
     visible: { opacity: 1, height: "auto", transition: { duration: 0.3 } },
     exit: { opacity: 0, height: 0, transition: { duration: 0.3 } },
   };
 
   return (
     <nav
-      className="fixed top-0 left-0 w-full z-50 text-white shadow-xl"
+      className="sticky top-0 left-0 w-full z-50 text-white shadow-lg backdrop-blur-sm"
       style={{
         backgroundImage: `
-          linear-gradient(to right, #3e2723, #5d4037, #795548),
+          linear-gradient(to right, #4e342e, #6d4c41, #8d6e63),
           url('https://www.transparenttextures.com/patterns/wood-pattern.png')
         `,
         backgroundSize: "cover",
         backgroundBlendMode: "overlay",
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
         {/* Brand */}
         <div
           onClick={() => {
             navigate("/");
             setMobileMenuOpen(false);
           }}
-          className="text-2xl font-extrabold tracking-wide cursor-pointer bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent"
+          className="text-xl sm:text-2xl font-extrabold tracking-wide cursor-pointer bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent"
         >
           JustWood <span className="text-amber-200">Doors</span>
         </div>
 
-        {/* Hamburger */}
+        {/* Hamburger (mobile only) */}
         <div className="lg:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="text-white focus:outline-none"
+            aria-label="Toggle Menu"
           >
             <svg
               className="w-7 h-7"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
@@ -81,8 +81,8 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
                 strokeWidth="2"
                 d={
                   mobileMenuOpen
-                    ? "M6 18L18 6M6 6l12 12"
-                    : "M4 6h16M4 12h16m-7 6h7"
+                    ? "M6 18L18 6M6 6l12 12" // X icon
+                    : "M4 6h16M4 12h16m-7 6h7" // Hamburger icon
                 }
               />
             </svg>
@@ -90,7 +90,7 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
         </div>
 
         {/* Desktop Menu */}
-        <ul className="hidden lg:flex items-center space-x-10 font-medium">
+        <ul className="hidden lg:flex items-center space-x-8 font-medium">
           <li
             onClick={() => navigate("/")}
             className="hover:text-amber-400 cursor-pointer transition-colors duration-300"
@@ -156,7 +156,7 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="lg:hidden absolute top-16 right-4 w-56 text-white rounded-lg shadow-xl overflow-hidden z-50 border border-amber-700/30"
+            className="lg:hidden absolute top-16 right-4 w-60 sm:w-72 text-white rounded-lg shadow-xl overflow-hidden z-50 border border-amber-700/30"
             style={{
               backgroundImage: `
                 linear-gradient(to bottom, #4e342e, #6d4c41, #8d6e63),
