@@ -40,25 +40,25 @@ const Contact = () => {
 
   const contactItems = [
     {
-      icon: <MapPin className="text-green-400 w-6 h-6" />,
+      icon: <MapPin className="text-amber-800 w-6 h-6" />,
       text: "No 26 Micheal Adeboye St, Victory Estate, Ejigbo, Lagos",
       link: "https://www.google.com/maps/search/?api=1&query=No+26+Micheal+Adeboye+Street,+Victory+Estate,+Ejigbo,+Lagos",
       tooltip: "Click to open Google Maps",
     },
     {
-      icon: <Phone className="text-green-400 w-6 h-6" />,
+      icon: <Phone className="text-amber-800 w-6 h-6" />,
       text: "+234 806 688 2900",
       link: "tel:+2348066882900",
       tooltip: "Click to call us",
     },
     {
-      icon: <Mail className="text-green-400 w-6 h-6" />,
+      icon: <Mail className="text-amber-800 w-6 h-6" />,
       text: "Justwooddoors@gmail.com",
       link: "https://mail.google.com/mail/?view=cm&fs=1&to=Justwooddoors@gmail.com",
       tooltip: "Click to send an email in Gmail",
     },
     {
-      icon: <MessageCircle className="text-green-400 w-6 h-6" />,
+      icon: <MessageCircle className="text-amber-800 w-6 h-6" />,
       text: "Chat on WhatsApp",
       link: `https://wa.me/2348066882900?text=${whatsappMessage}`,
       tooltip: "Click to chat on WhatsApp",
@@ -66,15 +66,15 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-6 md:p-12 mt-24 md:mt-32 relative overflow-hidden">
-      {/* Floating Orbs */}
+    <div className="min-h-screen bg-gray-200 text-gray-900 p-6 md:p-12 mt-24 md:mt-32 relative overflow-hidden">
+      {/* Floating Orbs with warm wood tones */}
       <motion.div
-        className="absolute top-20 left-10 w-72 h-72 bg-yellow-500/20 rounded-full blur-3xl"
+        className="absolute top-20 left-10 w-72 h-72 bg-amber-700/10 rounded-full blur-3xl"
         animate={{ x: [0, 30, -20, 0], y: [0, 20, -30, 0] }}
         transition={{ duration: 12, repeat: Infinity }}
       />
       <motion.div
-        className="absolute bottom-20 right-10 w-72 h-72 bg-green-500/20 rounded-full blur-3xl"
+        className="absolute bottom-20 right-10 w-72 h-72 bg-orange-900/10 rounded-full blur-3xl"
         animate={{ x: [0, -30, 20, 0], y: [0, -20, 30, 0] }}
         transition={{ duration: 14, repeat: Infinity }}
       />
@@ -83,7 +83,7 @@ const Contact = () => {
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-400 text-center mb-12"
+        className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-700 to-orange-900 text-center mb-12"
       >
         Contact & Articles
       </motion.h1>
@@ -104,16 +104,16 @@ const Contact = () => {
             <motion.div className="mb-2" whileHover={{ y: -3 }}>
               {item.icon}
             </motion.div>
-            <p className="font-semibold text-center hover:text-yellow-400 transition">
+            <p className="font-semibold text-center hover:text-amber-700 transition">
               {item.text}
             </p>
           </motion.a>
         ))}
       </div>
 
-      {/* Google Map under "Our Location" */}
-      <div className="max-w-4xl mx-auto mb-12 relative rounded-2xl overflow-hidden border border-white/20 shadow-xl">
-        <h2 className="text-3xl md:text-4xl font-bold text-yellow-400 mb-6 text-center">
+      {/* Google Map */}
+      <div className="max-w-4xl mx-auto mb-12 relative rounded-2xl overflow-hidden border border-gray-200 shadow-lg">
+        <h2 className="text-3xl md:text-4xl font-bold text-amber-800 mb-6 text-center">
           Our Location
         </h2>
         <iframe
@@ -137,14 +137,14 @@ const Contact = () => {
 
       {/* Articles List */}
       <div className="max-w-3xl mx-auto mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-yellow-400 mb-6 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-amber-800 mb-6 text-center">
           Latest Articles
         </h2>
         <ul className="space-y-6">
           {articles.map((article, idx) => (
             <motion.li
               key={idx}
-              className="border-b border-gray-700 pb-4 hover:text-yellow-400 transition cursor-pointer"
+              className="border-b border-gray-200 pb-4 hover:text-amber-700 transition cursor-pointer"
               whileHover={{ x: 5 }}
             >
               <a
@@ -154,9 +154,9 @@ const Contact = () => {
                 className="flex justify-between items-center"
               >
                 <span className="font-semibold text-lg">{article.title}</span>
-                <ExternalLink className="w-5 h-5 text-green-400" />
+                <ExternalLink className="w-5 h-5 text-amber-700" />
               </a>
-              <p className="text-gray-300 text-sm mt-1">{article.summary}</p>
+              <p className="text-gray-600 text-sm mt-1">{article.summary}</p>
             </motion.li>
           ))}
         </ul>
@@ -165,7 +165,7 @@ const Contact = () => {
       {/* Floating WhatsApp Button */}
       <motion.button
         onClick={() => setIsChatOpen(!isChatOpen)}
-        className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-xl hover:bg-green-600 transition z-50"
+        className="fixed bottom-6 right-6 bg-amber-800 text-white p-4 rounded-full shadow-xl hover:bg-amber-900 transition z-50"
         animate={{ scale: [1, 1.1, 1] }}
         transition={{ duration: 1.5, repeat: Infinity }}
         aria-label="Open WhatsApp Chat"
@@ -181,10 +181,10 @@ const Contact = () => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 300, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300 }}
-            className="fixed top-20 right-6 w-80 bg-gray-900/95 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl z-50 p-4 flex flex-col"
+            className="fixed top-20 right-6 w-80 bg-white border border-gray-200 rounded-2xl shadow-2xl z-50 p-4 flex flex-col"
           >
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-yellow-400 font-bold text-lg">Chat with Us</h3>
+              <h3 className="text-amber-800 font-bold text-lg">Chat with Us</h3>
               <button
                 onClick={() => setIsChatOpen(false)}
                 className="text-red-500 hover:text-red-600"
@@ -193,14 +193,14 @@ const Contact = () => {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-gray-200 mb-4 text-sm">
+            <p className="text-gray-700 mb-4 text-sm">
               Click below to open WhatsApp and start chatting.
             </p>
             <a
               href={`https://wa.me/2348066882900?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg text-center transition"
+              className="bg-amber-800 hover:bg-amber-900 text-white py-2 px-4 rounded-lg text-center transition"
               aria-label="Start WhatsApp Chat"
             >
               Start WhatsApp Chat

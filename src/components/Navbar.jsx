@@ -39,7 +39,17 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-blue-900 h-50 via-blue-800 to-blue-900 text-white shadow-md">
+    <nav
+      className="fixed top-0 left-0 w-full z-50 text-white shadow-xl"
+      style={{
+        backgroundImage: `
+          linear-gradient(to right, #3e2723, #5d4037, #795548),
+          url('https://www.transparenttextures.com/patterns/wood-pattern.png')
+        `,
+        backgroundSize: "cover",
+        backgroundBlendMode: "overlay",
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         {/* Brand */}
         <div
@@ -47,9 +57,9 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
             navigate("/");
             setMobileMenuOpen(false);
           }}
-          className="text-2xl font-bold tracking-wide cursor-pointer"
+          className="text-2xl font-extrabold tracking-wide cursor-pointer bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent"
         >
-          JustWood Doors <span className="text-yellow-400">Co.</span>
+          JustWood <span className="text-amber-200">Doors</span>
         </div>
 
         {/* Hamburger */}
@@ -59,7 +69,7 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
             className="text-white focus:outline-none"
           >
             <svg
-              className="w-6 h-6"
+              className="w-7 h-7"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -83,13 +93,13 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
         <ul className="hidden lg:flex items-center space-x-10 font-medium">
           <li
             onClick={() => navigate("/")}
-            className="hover:text-yellow-400 cursor-pointer"
+            className="hover:text-amber-400 cursor-pointer transition-colors duration-300"
           >
             Home
           </li>
           <li
             onClick={() => navigate("/about")}
-            className="hover:text-yellow-400 cursor-pointer"
+            className="hover:text-amber-400 cursor-pointer transition-colors duration-300"
           >
             About
           </li>
@@ -98,7 +108,7 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
           <li className="relative" ref={dropdownRef}>
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="hover:text-yellow-400 cursor-pointer focus:outline-none"
+              className="hover:text-amber-400 cursor-pointer focus:outline-none"
             >
               Services ▾
             </button>
@@ -109,13 +119,16 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  className="absolute left-0 mt-2 w-44 bg-white text-gray-900 rounded-xl shadow-lg overflow-hidden z-50"
+                  className="absolute left-0 mt-2 w-48 bg-stone-900 text-amber-100 rounded-xl shadow-xl overflow-hidden z-50 border border-amber-700/30"
                 >
                   {categories.map((item, index) => (
                     <motion.li
                       key={index}
-                      whileHover={{ backgroundColor: "#f3f4f6", scale: 1.02 }}
-                      className="px-5 py-3 hover:text-blue-700 cursor-pointer transition"
+                      whileHover={{
+                        backgroundColor: "rgba(251,191,36,0.15)",
+                        scale: 1.02,
+                      }}
+                      className="px-5 py-3 hover:text-amber-400 cursor-pointer transition"
                       onClick={() => handleCategoryClick(item)}
                     >
                       {item.charAt(0).toUpperCase() + item.slice(1)}
@@ -128,7 +141,7 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
 
           <li
             onClick={() => navigate("/contact")}
-            className="hover:text-yellow-400 cursor-pointer"
+            className="hover:text-amber-400 cursor-pointer transition-colors duration-300"
           >
             Contact
           </li>
@@ -143,14 +156,22 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="lg:hidden absolute top-16 right-4 w-48 bg-blue-900 text-white rounded-lg shadow-lg overflow-hidden z-50"
+            className="lg:hidden absolute top-16 right-4 w-56 text-white rounded-lg shadow-xl overflow-hidden z-50 border border-amber-700/30"
+            style={{
+              backgroundImage: `
+                linear-gradient(to bottom, #4e342e, #6d4c41, #8d6e63),
+                url('https://www.transparenttextures.com/patterns/wood-pattern.png')
+              `,
+              backgroundSize: "cover",
+              backgroundBlendMode: "overlay",
+            }}
           >
             <li
               onClick={() => {
                 navigate("/");
                 setMobileMenuOpen(false);
               }}
-              className="px-5 py-3 hover:bg-blue-800 cursor-pointer"
+              className="px-5 py-3 hover:bg-amber-600/20 cursor-pointer"
             >
               Home
             </li>
@@ -159,7 +180,7 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
                 navigate("/about");
                 setMobileMenuOpen(false);
               }}
-              className="px-5 py-3 hover:bg-blue-800 cursor-pointer"
+              className="px-5 py-3 hover:bg-amber-600/20 cursor-pointer"
             >
               About
             </li>
@@ -168,7 +189,7 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
             <li>
               <button
                 onClick={() => setMobileDropdownOpen(!mobileDropdownOpen)}
-                className="w-full text-left px-5 py-3 hover:bg-blue-800 focus:outline-none"
+                className="w-full text-left px-5 py-3 hover:bg-amber-600/20 focus:outline-none"
               >
                 Services ▾
               </button>
@@ -179,13 +200,16 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="bg-white text-gray-900 rounded-b-lg shadow-lg overflow-hidden"
+                    className="bg-stone-900 text-amber-100 rounded-b-lg shadow-lg overflow-hidden border-t border-amber-700/30"
                   >
                     {categories.map((item, index) => (
                       <motion.li
                         key={index}
-                        whileHover={{ backgroundColor: "#f3f4f6", scale: 1.02 }}
-                        className="px-5 py-3 hover:text-blue-700 cursor-pointer transition"
+                        whileHover={{
+                          backgroundColor: "rgba(251,191,36,0.15)",
+                          scale: 1.02,
+                        }}
+                        className="px-5 py-3 hover:text-amber-400 cursor-pointer transition"
                         onClick={() => handleCategoryClick(item)}
                       >
                         {item.charAt(0).toUpperCase() + item.slice(1)}
@@ -201,7 +225,7 @@ const Navbar = ({ categories = ["doors", "furnitures", "sofas", "beds"] }) => {
                 navigate("/contact");
                 setMobileMenuOpen(false);
               }}
-              className="px-5 py-3 hover:bg-blue-800 cursor-pointer"
+              className="px-5 py-3 hover:bg-amber-600/20 cursor-pointer"
             >
               Contact
             </li>
