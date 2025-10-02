@@ -1317,31 +1317,30 @@ const Home = () => {
             key={currentSlide}
             src={slides[currentSlide]}
             alt="Hero Slide"
-            initial={{ x: 300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -300, opacity: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover scale-105"
           />
         </AnimatePresence>
-        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40"></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 sm:px-6">
           <motion.h1
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-400 drop-shadow-lg"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-green-300 drop-shadow-2xl mb-4"
           >
-            Welcome to JustWood Doors
+            Elevate Your Space with JustWood Doors
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="text-sm sm:text-md md:text-xl text-gray-800 max-w-3xl mx-auto mt-4"
+            className="text-sm sm:text-md md:text-xl text-white max-w-3xl mx-auto mt-2 font-light tracking-wide"
           >
-            Premium Nigerian-made doors, crafted strong and stylish for your
-            home and office.
+            Premium Nigerian-crafted doors blending timeless elegance, superior security, and modern style for your home or office.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1351,9 +1350,9 @@ const Home = () => {
           >
             <a
               href="#doors"
-              className="px-4 py-2 sm:px-6 sm:py-3 rounded-lg bg-gradient-to-r from-yellow-500 to-green-500 text-black font-bold hover:scale-105 transform transition"
+              className="px-4 py-2 sm:px-6 sm:py-3 rounded-lg bg-gradient-to-r from-yellow-500 to-green-500 text-black font-bold hover:scale-105 transform transition shadow-md hover:shadow-lg"
             >
-              Explore Doors
+              Explore Our Collection
             </a>
             <a
               href={`https://wa.me/+2348066882900?text=${encodeURIComponent(
@@ -1361,9 +1360,9 @@ const Home = () => {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2 sm:px-6 sm:py-3 rounded-lg transition text-white font-semibold"
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2 sm:px-6 sm:py-3 rounded-lg transition text-white font-semibold shadow-md hover:shadow-lg hover:scale-105"
             >
-              <FaWhatsapp /> WhatsApp Us
+              <FaWhatsapp /> Get a Quote
             </a>
           </motion.div>
         </div>
