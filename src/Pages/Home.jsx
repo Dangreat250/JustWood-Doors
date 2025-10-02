@@ -534,7 +534,7 @@ Best For: Main entrance, modern homes, luxury apartments, and offices.“Make a 
 
 **Cultural & Aesthetic Relevance:** Stylish and contemporary, ideal for offices and interiors.  
 
-**Installation Guidance:** Standard hinges, professional fitting recommended.  
+**Installation Guidance:** Standard hinges; professional fitting recommended.  
 
 **Use Cases:** Bathrooms, offices, bedrooms.  
 
@@ -1325,12 +1325,12 @@ const Home = () => {
           />
         </AnimatePresence>
         <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
+        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 sm:px-6">
           <motion.h1
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-400 drop-shadow-lg"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-400 drop-shadow-lg"
           >
             Welcome to JustWood Doors
           </motion.h1>
@@ -1338,7 +1338,7 @@ const Home = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="text-md md:text-xl text-gray-800 max-w-3xl mx-auto mt-4"
+            className="text-sm sm:text-md md:text-xl text-gray-800 max-w-3xl mx-auto mt-4"
           >
             Premium Nigerian-made doors, crafted strong and stylish for your
             home and office.
@@ -1347,11 +1347,11 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 1 }}
-            className="mt-8 flex gap-4 flex-wrap justify-center"
+            className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-4 justify-center"
           >
             <a
               href="#doors"
-              className="px-6 py-3 rounded-lg bg-gradient-to-r from-yellow-500 to-green-500 text-black font-bold hover:scale-105 transform transition"
+              className="px-4 py-2 sm:px-6 sm:py-3 rounded-lg bg-gradient-to-r from-yellow-500 to-green-500 text-black font-bold hover:scale-105 transform transition"
             >
               Explore Doors
             </a>
@@ -1361,7 +1361,7 @@ const Home = () => {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg transition text-white font-semibold"
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2 sm:px-6 sm:py-3 rounded-lg transition text-white font-semibold"
             >
               <FaWhatsapp /> WhatsApp Us
             </a>
@@ -1370,22 +1370,22 @@ const Home = () => {
       </div>
 
       {/* Navigation Dropdown */}
-      <div className="bg-gray-200 p-6">
-        <div className="flex space-x-8 text-lg">
+      <div className="bg-gray-200 p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row flex-wrap justify-center sm:space-x-4 md:space-x-8 text-base sm:text-lg gap-2 sm:gap-0">
           {Object.keys(categories).map((category) => (
-            <div key={category} className="relative">
+            <div key={category} className="relative w-full sm:w-auto">
               <button
                 onClick={() =>
                   setActiveCategory(
                     activeCategory === category ? null : category
                   )
                 }
-                className="text-black hover:text-yellow-400 bg-gray-300 px-4 py-2 rounded-t-lg shadow-md hover:bg-gray-400 transition duration-300"
+                className="w-full sm:w-auto text-black hover:text-yellow-400 bg-gray-300 px-4 py-2 rounded-t-lg shadow-md hover:bg-gray-400 transition duration-300"
               >
                 {category}
               </button>
               {activeCategory === category && (
-                <div className="w-full bg-gradient-to-br from-gray-200 to-gray-300 p-4 rounded-b-lg shadow-lg mt-0">
+                <div className="absolute left-0 sm:relative w-full bg-gradient-to-br from-gray-200 to-gray-300 p-4 rounded-b-lg shadow-lg mt-0 z-10">
                   {categories[category].map((section, index) => (
                     <div key={index} className="mb-4">
                       <p className="text-black font-bold mb-1 bg-gray-100 px-2 py-1 rounded">
@@ -1443,7 +1443,7 @@ const Home = () => {
       {/* Doors Grid with Adjusted Margin */}
       <div
         id="doors"
-        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 p-6 mt-8"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 p-4 sm:p-6 mt-6 sm:mt-8"
       >
         {doors.map((door, idx) => (
           <motion.div
@@ -1454,18 +1454,18 @@ const Home = () => {
             <img
               src={door.img}
               alt={door.title}
-              className="w-full h-48 object-cover"
+              className="w-full h-40 sm:h-48 object-cover"
               onClick={() => setSelectedDoor(door)}
             />
-            <div className="absolute top-2 left-2 bg-yellow-400 text-black font-bold px-3 py-1 rounded-full text-sm shadow-lg">
+            <div className="absolute top-2 left-2 bg-yellow-400 text-black font-bold px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm shadow-lg">
               ₦{door.price.toLocaleString()}
             </div>
-            <div className="p-3 text-center">
-              <p className="font-semibold text-black">{door.title}</p>
-              <div className="flex justify-center gap-3 mt-2 flex-wrap">
+            <div className="p-2 sm:p-3 text-center">
+              <p className="font-semibold text-black text-sm sm:text-base">{door.title}</p>
+              <div className="flex justify-center gap-2 sm:gap-3 mt-2 flex-wrap">
                 <button
                   onClick={() => addToCart(door)}
-                  className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded-lg flex items-center gap-1 text-white"
+                  className="bg-green-600 hover:bg-green-700 px-2 sm:px-3 py-1 rounded-lg flex items-center gap-1 text-white text-xs sm:text-sm"
                 >
                   <FaShoppingCart /> Add to Cart
                 </button>
@@ -1473,7 +1473,7 @@ const Home = () => {
                   onClick={() =>
                     setExpandedInfo(expandedInfo === door ? null : door)
                   }
-                  className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-lg flex items-center gap-1 text-white"
+                  className="bg-blue-600 hover:bg-blue-700 px-2 sm:px-3 py-1 rounded-lg flex items-center gap-1 text-white text-xs sm:text-sm"
                 >
                   <FaInfoCircle /> Info
                 </button>
@@ -1487,14 +1487,14 @@ const Home = () => {
       <AnimatePresence>
         {expandedInfo && (
           <motion.div
-            className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-6"
+            className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4 sm:p-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setExpandedInfo(null)}
           >
             <motion.div
-              className="relative max-w-3xl w-full bg-gray-100 rounded-xl p-6 overflow-y-auto max-h-[90vh]"
+              className="relative w-full max-w-md sm:max-w-3xl bg-gray-100 rounded-xl p-4 sm:p-6 overflow-y-auto max-h-[90vh]"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
@@ -1503,20 +1503,20 @@ const Home = () => {
               <img
                 src={expandedInfo.img}
                 alt={expandedInfo.title}
-                className="w-full h-72 object-contain rounded-xl mb-4"
+                className="w-full h-60 sm:h-72 object-contain rounded-xl mb-4"
               />
-              <h2 className="text-3xl font-bold mb-2 text-black">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-black">
                 {expandedInfo.title}
               </h2>
-              <p className="text-yellow-400 text-xl mb-4">
+              <p className="text-yellow-400 text-lg sm:text-xl mb-4">
                 ₦{expandedInfo.price.toLocaleString()}
               </p>
-              <p className="text-gray-700 whitespace-pre-line">
+              <p className="text-gray-700 whitespace-pre-line text-sm sm:text-base">
                 {expandedInfo.desc}
               </p>
               <button
                 onClick={() => setExpandedInfo(null)}
-                className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold"
+                className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg font-semibold text-sm sm:text-base"
               >
                 Close
               </button>
@@ -1529,14 +1529,14 @@ const Home = () => {
       <AnimatePresence>
         {selectedDoor && (
           <motion.div
-            className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-6"
+            className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4 sm:p-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedDoor(null)}
           >
             <motion.div
-              className="relative max-w-4xl w-full bg-gray-100 rounded-xl p-6 overflow-y-auto max-h-[90vh]"
+              className="relative w-full max-w-lg sm:max-w-4xl bg-gray-100 rounded-xl p-4 sm:p-6 overflow-y-auto max-h-[90vh]"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
@@ -1545,26 +1545,26 @@ const Home = () => {
               <img
                 src={selectedDoor.img}
                 alt={selectedDoor.title}
-                className="w-full h-96 object-contain rounded-xl mb-4"
+                className="w-full h-80 sm:h-96 object-contain rounded-xl mb-4"
               />
-              <h2 className="text-3xl font-bold mb-2 text-black">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-black">
                 {selectedDoor.title}
               </h2>
-              <p className="text-yellow-400 text-xl mb-4">
+              <p className="text-yellow-400 text-lg sm:text-xl mb-4">
                 ₦{selectedDoor.price.toLocaleString()}
               </p>
-              <p className="text-gray-700 whitespace-pre-line">
+              <p className="text-gray-700 whitespace-pre-line text-sm sm:text-base">
                 {selectedDoor.desc}
               </p>
               <button
                 onClick={() => addToCart(selectedDoor)}
-                className="mt-4 bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg flex items-center gap-2 text-white"
+                className="mt-4 bg-green-600 hover:bg-green-700 px-3 sm:px-4 py-1 sm:py-2 rounded-lg flex items-center gap-2 text-white text-sm sm:text-base"
               >
                 <FaShoppingCart /> Add to Cart
               </button>
               <button
                 onClick={() => setSelectedDoor(null)}
-                className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold"
+                className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg font-semibold text-sm sm:text-base"
               >
                 Close
               </button>
@@ -1574,15 +1574,15 @@ const Home = () => {
       </AnimatePresence>
 
       {/* Floating Cart Button */}
-      <div className="fixed bottom-16 right-6 z-50">
+      <div className="fixed bottom-20 sm:bottom-16 right-4 sm:right-6 z-50">
         <button
           onClick={() => setCartOpen(!cartOpen)}
-          className="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg text-2xl"
+          className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg text-xl sm:text-2xl"
           title="Your Cart"
         >
           🛒
           {cart.length > 0 && (
-            <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+            <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center">
               {cart.length}
             </span>
           )}
@@ -1597,15 +1597,15 @@ const Home = () => {
             animate={{ x: 0 }}
             exit={{ x: 300 }}
             transition={{ type: "tween" }}
-            className="fixed right-0 top-16 h-[calc(100%-5rem)] w-80 bg-gray-100 shadow-2xl z-50 p-4 flex flex-col"
+            className="fixed right-0 top-16 h-[calc(100%-5rem)] w-full sm:w-80 bg-gray-100 shadow-2xl z-50 p-4 flex flex-col"
           >
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-black">
+              <h2 className="text-xl sm:text-2xl font-bold text-black">
                 Your Cart ({cart.length})
               </h2>
               <button
                 onClick={() => setCartOpen(false)}
-                className="text-red-500 hover:text-red-700 text-xl"
+                className="text-red-500 hover:text-red-700 text-lg sm:text-xl"
               >
                 ×
               </button>
@@ -1613,7 +1613,7 @@ const Home = () => {
 
             <div className="flex-1 overflow-y-auto">
               {cart.length === 0 ? (
-                <p className="text-gray-600">Your cart is empty</p>
+                <p className="text-gray-600 text-sm sm:text-base">Your cart is empty</p>
               ) : (
                 cart.map((item, idx) => (
                   <div
@@ -1623,17 +1623,17 @@ const Home = () => {
                     <img
                       src={item.img}
                       alt={item.title}
-                      className="w-16 h-16 object-cover rounded mr-3"
+                      className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded mr-3"
                     />
                     <div className="flex-1">
-                      <p className="font-semibold text-black">{item.title}</p>
-                      <p className="text-yellow-400">
+                      <p className="font-semibold text-black text-sm sm:text-base">{item.title}</p>
+                      <p className="text-yellow-400 text-xs sm:text-sm">
                         ₦{item.price.toLocaleString()}
                       </p>
                     </div>
                     <button
                       onClick={() => removeFromCart(idx)}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-red-500 hover:text-red-700 text-sm sm:text-base"
                     >
                       <FaTrash />
                     </button>
@@ -1655,7 +1655,7 @@ const Home = () => {
                   const whatsappUrl = `https://wa.me/2348066882900?text=Hello,%20I%20want%20to%20order:%0A${message}%0ATotal:%20₦${total.toLocaleString()}`;
                   window.open(whatsappUrl, "_blank");
                 }}
-                className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg shadow-lg text-center"
+                className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 sm:py-3 rounded-lg shadow-lg text-center text-sm sm:text-base"
               >
                 Checkout via WhatsApp
               </button>
@@ -1671,9 +1671,9 @@ const Home = () => {
         )}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg z-50 flex items-center justify-center animate-pulse"
+        className="fixed bottom-6 right-4 sm:right-6 bg-green-500 hover:bg-green-600 text-white p-3 sm:p-4 rounded-full shadow-lg z-50 flex items-center justify-center animate-pulse"
       >
-        <FaWhatsapp size={28} />
+        <FaWhatsapp size={24} className="sm:size-28" />
       </a>
     </div>
   );
