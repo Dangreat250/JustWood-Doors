@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FaWhatsapp,
   FaTrash,
   FaInfoCircle,
   FaShoppingCart,
+  FaPlus,
+  FaMinus,
 } from "react-icons/fa";
 
 import heroDoor from "../assets/hero-door.jpg";
@@ -792,6 +794,9 @@ const Home = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeChild, setActiveChild] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const cartRef = useRef(null);
+  const firstFocusableElementRef = useRef(null);
+  const lastFocusableElementRef = useRef(null);
 
   const slides = [heroDoor, door1, door2, door3, door4, door5];
 
@@ -802,17 +807,67 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const whatsappMsg =
-    "Hello! I am interested in your doors. Please provide more details.";
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setCartOpen(false);
+      }
+      // Trap focus within cart panel
+      if (cartOpen && e.key === "Tab") {
+        if (e.shiftKey && document.activeElement === firstFocusableElementRef.current) {
+          e.preventDefault();
+          lastFocusableElementRef.current.focus();
+        } else if (!e.shiftKey && document.activeElement === lastFocusableElementRef.current) {
+          e.preventDefault();
+          firstFocusableElementRef.current.focus();
+        }
+      }
+    };
+
+    if (cartOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+      firstFocusableElementRef.current?.focus();
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [cartOpen]);
+
+  const whatsappMsg = "Hello! I am interested in your doors. Please provide more details.";
 
   const addToCart = (door) => {
-    setCart((prev) => [...prev, door]);
+    setCart((prev) => {
+      const existing = prev.find((item) => item.title === door.title);
+      if (existing) {
+        return prev.map((item) =>
+          item.title === door.title ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [...prev, { ...door, quantity: 1 }];
+    });
     setCartOpen(true);
   };
 
-  const removeFromCart = (idx) => {
-    setCart((prev) => prev.filter((_, i) => i !== idx));
+  const removeFromCart = (title) => {
+    setCart((prev) => prev.filter((item) => item.title !== title));
   };
+
+  const updateQuantity = (title, delta) => {
+    setCart((prev) => {
+      const item = prev.find((i) => i.title === title);
+      if (!item) return prev;
+      const newQuantity = item.quantity + delta;
+      if (newQuantity <= 0) {
+        return prev.filter((i) => i.title !== title);
+      }
+      return prev.map((i) =>
+        i.title === title ? { ...i, quantity: newQuantity } : i
+      );
+    });
+  };
+
+  const cartTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const categories = {
     "Internal Doors": [
@@ -1317,30 +1372,31 @@ const Home = () => {
             key={currentSlide}
             src={slides[currentSlide]}
             alt="Hero Slide"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ x: 300, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -300, opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="absolute inset-0 w-full h-full object-cover scale-105"
+            className="absolute inset-0 w-full h-full object-cover"
           />
         </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 sm:px-6">
           <motion.h1
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-green-300 drop-shadow-2xl mb-4"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-yellow-400 drop-shadow-lg"
           >
-            Elevate Your Space with JustWood Doors
+            Welcome to JustWood Doors
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="text-sm sm:text-md md:text-xl text-white max-w-3xl mx-auto mt-2 font-light tracking-wide"
+            className="text-sm sm:text-md md:text-xl text-gray-800 max-w-3xl mx-auto mt-4"
           >
-            Premium Nigerian-crafted doors blending timeless elegance, superior security, and modern style for your home or office.
+            Premium Nigerian-made doors, crafted strong and stylish for your
+            home and office.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1350,9 +1406,9 @@ const Home = () => {
           >
             <a
               href="#doors"
-              className="px-4 py-2 sm:px-6 sm:py-3 rounded-lg bg-gradient-to-r from-yellow-500 to-green-500 text-black font-bold hover:scale-105 transform transition shadow-md hover:shadow-lg"
+              className="px-4 py-2 sm:px-6 sm:py-3 rounded-lg bg-gradient-to-r from-yellow-500 to-green-500 text-black font-bold hover:scale-105 transform transition"
             >
-              Explore Our Collection
+              Explore Doors
             </a>
             <a
               href={`https://wa.me/+2348066882900?text=${encodeURIComponent(
@@ -1360,9 +1416,9 @@ const Home = () => {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2 sm:px-6 sm:py-3 rounded-lg transition text-white font-semibold shadow-md hover:shadow-lg hover:scale-105"
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2 sm:px-6 sm:py-3 rounded-lg transition text-white font-semibold"
             >
-              <FaWhatsapp /> Get a Quote
+              <FaWhatsapp /> WhatsApp Us
             </a>
           </motion.div>
         </div>
@@ -1573,15 +1629,16 @@ const Home = () => {
       </AnimatePresence>
 
       {/* Floating Cart Button */}
-      <div className="fixed bottom-20 sm:bottom-16 right-4 sm:right-6 z-50">
+      <div className="fixed bottom-24 sm:bottom-20 right-4 sm:right-6 z-50">
         <button
           onClick={() => setCartOpen(!cartOpen)}
-          className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-lg text-xl sm:text-2xl"
+          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-xl hover:shadow-2xl text-2xl sm:text-3xl transition-transform transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500"
           title="Your Cart"
+          aria-label={`Open cart with ${cart.length} items`}
         >
-          🛒
+          <FaShoppingCart />
           {cart.length > 0 && (
-            <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center">
+            <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center">
               {cart.length}
             </span>
           )}
@@ -1591,88 +1648,137 @@ const Home = () => {
       {/* Slide Cart Panel */}
       <AnimatePresence>
         {cartOpen && (
-          <motion.div
-            initial={{ x: 300 }}
-            animate={{ x: 0 }}
-            exit={{ x: 300 }}
-            transition={{ type: "tween" }}
-            className="fixed right-0 top-16 h-[calc(100%-5rem)] w-full sm:w-80 bg-gray-100 shadow-2xl z-50 p-4 flex flex-col"
-          >
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl sm:text-2xl font-bold text-black">
-                Your Cart ({cart.length})
-              </h2>
-              <button
-                onClick={() => setCartOpen(false)}
-                className="text-red-500 hover:text-red-700 text-lg sm:text-xl"
-              >
-                ×
-              </button>
-            </div>
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black z-40"
+              onClick={() => setCartOpen(false)}
+              aria-hidden="true"
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed right-0 top-0 h-full w-full sm:w-80 bg-white shadow-2xl z-50 p-4 sm:p-6 flex flex-col rounded-l-xl"
+              role="dialog"
+              aria-labelledby="cart-title"
+              ref={cartRef}
+              tabIndex={-1}
+            >
+              <div className="flex justify-between items-center mb-6">
+                <h2
+                  id="cart-title"
+                  className="text-xl sm:text-2xl font-bold text-gray-900"
+                >
+                  Your Cart ({cart.length})
+                </h2>
+                <button
+                  onClick={() => setCartOpen(false)}
+                  className="text-red-500 hover:text-red-700 text-2xl sm:text-3xl focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
+                  aria-label="Close cart"
+                  ref={firstFocusableElementRef}
+                >
+                  &times;
+                </button>
+              </div>
 
-            <div className="flex-1 overflow-y-auto">
-              {cart.length === 0 ? (
-                <p className="text-gray-600 text-sm sm:text-base">Your cart is empty</p>
-              ) : (
-                cart.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center mb-4 border-b border-gray-300 pb-2"
-                  >
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded mr-3"
-                    />
-                    <div className="flex-1">
-                      <p className="font-semibold text-black text-sm sm:text-base">{item.title}</p>
-                      <p className="text-yellow-400 text-xs sm:text-sm">
-                        ₦{item.price.toLocaleString()}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => removeFromCart(idx)}
-                      className="text-red-500 hover:text-red-700 text-sm sm:text-base"
+              <div className="flex-1 overflow-y-auto px-2">
+                {cart.length === 0 ? (
+                  <p className="text-gray-600 text-center text-sm sm:text-base">
+                    Your cart is empty
+                  </p>
+                ) : (
+                  cart.map((item, idx) => (
+                    <div
+                      key={item.title}
+                      className="flex items-center mb-4 border-b border-gray-200 pb-4"
                     >
-                      <FaTrash />
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-lg mr-3"
+                      />
+                      <div className="flex-1">
+                        <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                          {item.title}
+                        </p>
+                        <p className="text-yellow-500 text-xs sm:text-sm">
+                          ₦{(item.price * item.quantity).toLocaleString()}
+                        </p>
+                        <div className="flex items-center mt-2">
+                          <button
+                            onClick={() => updateQuantity(item.title, -1)}
+                            className="text-gray-600 hover:text-gray-800 p-1 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded"
+                            aria-label={`Decrease quantity of ${item.title}`}
+                          >
+                            <FaMinus size={12} />
+                          </button>
+                          <span className="mx-2 text-gray-900 text-sm sm:text-base">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() => updateQuantity(item.title, 1)}
+                            className="text-gray-600 hover:text-gray-800 p-1 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded"
+                            aria-label={`Increase quantity of ${item.title}`}
+                          >
+                            <FaPlus size={12} />
+                          </button>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => removeFromCart(item.title)}
+                        className="text-red-500 hover:text-red-700 p-2 focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
+                        aria-label={`Remove ${item.title} from cart`}
+                      >
+                        <FaTrash size={16} />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
 
-            {cart.length > 0 && (
-              <button
-                onClick={() => {
-                  const message = cart
-                    .map(
-                      (item) =>
-                        `${item.title} - ₦${item.price.toLocaleString()}`
-                    )
-                    .join("%0A");
-                  const total = cart.reduce((sum, item) => sum + item.price, 0);
-                  const whatsappUrl = `https://wa.me/2348066882900?text=Hello,%20I%20want%20to%20order:%0A${message}%0ATotal:%20₦${total.toLocaleString()}`;
-                  window.open(whatsappUrl, "_blank");
-                }}
-                className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 sm:py-3 rounded-lg shadow-lg text-center text-sm sm:text-base"
-              >
-                Checkout via WhatsApp
-              </button>
-            )}
-          </motion.div>
+              {cart.length > 0 && (
+                <div className="mt-6">
+                  <p className="text-lg sm:text-xl font-semibold text-gray-900 mb-4">
+                    Total: ₦{cartTotal.toLocaleString()}
+                  </p>
+                  <button
+                    onClick={() => {
+                      const message = cart
+                        .map(
+                          (item) =>
+                            `${item.title} (Qty: ${item.quantity}) - ₦${(
+                              item.price * item.quantity
+                            ).toLocaleString()}`
+                        )
+                        .join("%0A");
+                      const whatsappUrl = `https://wa.me/2348066882900?text=Hello,%20I%20want%20to%20order:%0A${message}%0ATotal:%20₦${cartTotal.toLocaleString()}`;
+                      window.open(whatsappUrl, "_blank");
+                    }}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 sm:py-4 rounded-lg shadow-lg text-center text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-green-500"
+                    ref={lastFocusableElementRef}
+                  >
+                    Checkout via WhatsApp
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
       {/* Floating WhatsApp Button */}
       <a
-        href={`https://wa.me/+2348066882900?text=${encodeURIComponent(
-          whatsappMsg
-        )}`}
+        href={`https://wa.me/+2348066882900?text=${encodeURIComponent(whatsappMsg)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-4 sm:right-6 bg-green-500 hover:bg-green-600 text-white p-3 sm:p-4 rounded-full shadow-lg z-50 flex items-center justify-center animate-pulse"
+        className="fixed bottom-6 right-4 sm:right-6 bg-green-500 hover:bg-green-600 text-white p-3 sm:p-4 rounded-full shadow-lg z-50 flex items-center justify-center animate-pulse focus:outline-none focus:ring-2 focus:ring-green-500"
+        aria-label="Contact us via WhatsApp"
       >
-        <FaWhatsapp size={24} className="sm:size-28" />
+        <FaWhatsapp size={24} className="sm:size-32" />
       </a>
     </div>
   );
